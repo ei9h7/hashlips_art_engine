@@ -8,46 +8,75 @@ const { MODE } = require(path.join(basePath, "src/blendMode.js"));
 const buildDir = path.join(basePath, "/build");
 const layersDir = path.join(basePath, "/layers");
 
-const description =
-  "This is the description of your NFT project, remember to replace this";
-const baseUri = "ipfs://NewUriToReplace";
+// General metadata for Ethereum
+const description = "Description of project"; // *TODO* Update description
+const baseUri = "ipfs://foo.bar"; // *TODO* Update URI
+
+const extraMetadata = {
+  creator: "Anastasia Grigovera and Ayton MacEachern",
+  seller_fee_basis_points: 500, // Define how much % you want from secondary market sales 1000 = 10%
+  external_url: "https://cryptarot.studiothirteen.io",
+  creators: [
+    {
+      address: "0xe93742237eD9B2045798AeAe4D39F6832378acb2", // Anastasia
+      share: 50, // 45, **TODO**
+    }, 
+    {
+      address: "0x6ccF4d2Dc91B15BFc3907f0A01f2Abf40a879799", // Ayton
+      share: 50, 
+    }, // 45, **TODO**
+ // {  
+      // address: "charity", // For donation to animal shelter
+      // share: 10,
+ // },
+  ],
+};
 
 const outputJPEG = false; // if false, the generator outputs png's
 
 // if you use an empty/transparent file, set the name here.
-const emptyLayerName = "NONE";
+const emptyLayerName = "blank";
 
-//IF you need a provenance hash, turn this on
+// IF you need a provenance hash, turn this on
 const hashImages = true;
 
 const layerConfigurations = [
-  {
-    growEditionSizeTo: 11,
-    // namePrefix: "Monkey", Use to add a name to Metadata `name:`
-    layersOrder: [
-      { name: "Background" },
-      {
-        name: "Back Accessory",
+      // {
+        // name: "Back Accessory",
         // options: {
         //   bypassDNA: true,
         // },
-      },
-      { name: "Head" },
-      { name: "Clothes" },
-      { name: "Eyes" },
-      { name: "Hair" },
-      { name: "Head Accessory" },
-      { name: "Shirt Accessories" },
+      // },
+  {
+    growEditionSizeTo: 5, // 3889, // Minor Arcanas
+    namePrefix: "crypTarot_minorArcana",
+    layersOrder: [
+      { name: "00_bgBorder", options: { displayName: "Card Back", bypassDNA: true } },
+      { name: "01_bg", options: { displayName: "Background Colour", bypassDNA: true } },
+      { name: "02_bgPicture", options: { displayName: "Background Picture" } },
+      { name: "03_body", options: { displayName: "Shirt" } },
+      { name: "09_minorNumbers", options: { displayName: "Minor Arcana Card Number" } },
+      { name: "04_extraBack", options: { displayName: "Background Extra" } },
+      { name: "05_face", options: { displayName: "Minor Arcana Card Suit" } },
+      { name: "06_mouth", options: { displayName: "Mouth Accessories" } },
+      { name: "07_eyes", options: { displayName: "Eyewear" } },
+      { name: "08_extraTop", options: { displayName: "Headwear/Shoulder Accessories" } },
+      { name: "10_border", options: { displayName: "Border" } },
     ],
   },
   // {
-  //   growEditionSizeTo: 10,
-  //   namePrefix: "Lion",
-  //   resetNameIndex: true, // this will start the Lion count at #1 instead of #6
+  //   growEditionSizeTo: 6111, // Major Arcanas
+  //   namePrefix: "crypTarot_majorArcana",
   //   layersOrder: [
-  //     { name: "Background" },
-  //     { name: "Hats" },
-  //     { name: "Male Hair" },
+  //     { name: "00_bgBorder", options: { displayName: "Card Back", bypassDNA: true } },
+  //     { name: "01_bg", options: { displayName: "Background Colour", bypassDNA: true } },
+  //     { name: "02_bgPicture", options: { displayName: "Background Picture" } },
+  //     { name: "03_majorNameNumberCharacter", options: { displayName: "Major Arcana Card" } },
+  //     { name: "04_extraBack", options: { displayName: "Shoulder Accessories" } },
+  //     { name: "05_majorFace", options: { displayName: "Animal Face" } },
+  //     { name: "06_mouth", options: { displayName: "Mouth Accessories" } },
+  //     { name: "07_eyes", options: { displayName: "Eyewear" } },
+  //     { name: "08_border", options: { displayName: "Border" } },
   //   ],
   // },
 ];
@@ -56,26 +85,28 @@ const layerConfigurations = [
  * Incompatible items can be added to this object by a files cleanName
  * This works in layer order, meaning, you need to define the layer that comes
  * first as the Key, and the incompatible items that _may_ come after.
- * The current version requires all layers to have unique names, or you may
- * accidentally set incompatibilities for the _wrong_ item.
+ * All layers to have unique names, or you may accidentally set 
+ * incompatibilities for the _wrong_ item.
  */
 const incompatible = {
-  //   Red: ["Dark Long"],
-  //   // directory incompatible with directory example
-  //   White: ["rare-Pink-Pompadour"],
+  // example
+  //  redBackground: ["redHair"],
+  // "02_bgPicture": ["foolCard"],
+  knightSwords: ["red", "guy", "heart"],
 };
 
 /**
  * Require combinations of files when constructing DNA, this bypasses the
  * randomization and weights.
- *
  * The layer order matters here, the key (left side) is an item within
  * the layer that comes first in the stack.
- * the items in the array are "required" items that should be pulled from folders
+ * The items in the array are "required" items that should be pulled from folders
  * further in the stack
- */
+ **/
 const forcedCombinations = {
-  // floral: ["MetallicShades", "Golden Sakura"],
+  knightBody: ["knightSwords"],
+  // Can also do multiple combinations like this example
+  // rainbow: ["sun", "toast"],
 };
 
 const shuffleLayerConfigurations = false;
@@ -86,55 +117,50 @@ const shuffleLayerConfigurations = false;
  * clean-filename: trait-value override pairs. Wrap filenames with spaces in quotes.
  */
 const traitValueOverrides = {
-  Helmet: "Space Helmet",
-  "gold chain": "GOLDEN NECKLACE",
+  // Helmet: "Space Helmet",
+  // "gold chain": "GOLDEN NECKLACE",
 };
 
 const debugLogs = true;
 
 const format = {
-  width: 512,
-  height: 512,
+  width: 1200,
+  height: 1800,
 };
 
 const background = {
-  generate: true,
-  brightness: "80%",
+  generate: false,
+  // brightness: "80%",
 };
 
-const extraMetadata = {};
-
-const extraAttributes = () => [
-  // Optionally, if you need to overwrite one of your layers attributes.
-  // You can include the same name as the layer, here, and it will overwrite
-  //
-  // {
-  // trait_type: "Bottom lid",
-  //   value: ` Bottom lid # ${Math.random() * 100}`,
-  // },
-  // {
-  //   display_type: "boost_number",
-  //   trait_type: "Aqua Power",
-  //   value: Math.random() * 100,
-  // },
-  // {
-  //   display_type: "boost_number",
-  //   trait_type: "Health",
-  //   value: Math.random() * 100,
-  // },
-  // {
-  //   display_type: "boost_number",
-  //   trait_type: "Mana",
-  //   value: Math.floor(Math.random() * 100),
-  // },
-];
+function extraAttributes() {
+  return [
+    // Optionally, if you need to overwrite one of your layers attributes.
+    // You can include the same name as the layer, here, and it will overwrite
+    //
+    // {
+    // trait_type: "Bottom lid",
+    //   value: ` Bottom lid # ${Math.random() * 100}`,
+    // },
+    // {
+    //   display_type: "boost_number",
+    //   trait_type: "Health",
+    //   value: Math.random() * 100,
+    // },
+    // {
+    //   display_type: "boost_number",
+    //   trait_type: "Mana",
+    //   value: Math.floor(Math.random() * 100),
+    // },
+  ];
+}
 
 const rarityDelimiter = "#";
 
 const uniqueDnaTorrance = 10000;
 
 /**
- * Set to true to always use the root folder as trait_tybe
+ * Set to true to always use the root folder as trait_type
  * Set to false to use weighted parent folders as trait_type
  * Default is true.
  */
@@ -142,7 +168,7 @@ const useRootTraitType = true;
 
 const preview = {
   thumbPerRow: 5,
-  thumbWidth: 50,
+  thumbWidth: 150,
   imageRatio: format.width / format.height,
   imageName: "preview.png",
 };

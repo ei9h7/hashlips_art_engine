@@ -47,7 +47,7 @@ const DNA_DELIMITER = "*";
 
 const buildSetup = () => {
   if (fs.existsSync(buildDir)) {
-    fs.rmdirSync(buildDir, { recursive: true });
+  fs.rmSync(buildDir, { recursive: true });
   }
   fs.mkdirSync(buildDir);
   fs.mkdirSync(path.join(buildDir, "/json"));
@@ -278,7 +278,7 @@ const addMetadata = (_dna, _edition, _prefixData) => {
     date: dateTime,
     ...extraMetadata,
     attributes: cleanedAttrs,
-    compiler: "HashLips Art Engine - NFTChef fork",
+    compiler: "studioThirteen",
   };
   metadataList.push(tempMetadata);
   attributesList = [];
