@@ -48,20 +48,21 @@ const layerConfigurations = [
         // },
       // },
   {
-    growEditionSizeTo: 5, // 3889, // Minor Arcanas
+    growEditionSizeTo: 200, // 3889, // Minor Arcanas
     namePrefix: "crypTarot_minorArcana",
     layersOrder: [
-      { name: "00_bgBorder", options: { displayName: "Card Back", bypassDNA: true } },
-      { name: "01_bg", options: { displayName: "Background Colour", bypassDNA: true } },
+      { name: "00_cardBack", options: { displayName: "Card Back", bypassDNA: true } },
+      { name: "01_bgColour", options: { displayName: "Background Colour", bypassDNA: true } },
       { name: "02_bgPicture", options: { displayName: "Background Picture" } },
-      { name: "03_body", options: { displayName: "Shirt" } },
-      { name: "09_minorNumbers", options: { displayName: "Minor Arcana Card Number" } },
-      { name: "04_extraBack", options: { displayName: "Background Extra" } },
-      { name: "05_face", options: { displayName: "Minor Arcana Card Suit" } },
-      { name: "06_mouth", options: { displayName: "Mouth Accessories" } },
-      { name: "07_eyes", options: { displayName: "Eyewear" } },
-      { name: "08_extraTop", options: { displayName: "Headwear/Shoulder Accessories" } },
-      { name: "10_border", options: { displayName: "Border" } },
+      { name: "04_body", options: { displayName: "Shirt" } },
+      { name: "05_objects", options: { displayName: "Minor Arcana Card Number" } },
+      { name: "06_face", options: { displayName: "Background Extra" } },
+      { name: "07_extraTop", options: { displayName: "Minor Arcana Card Suit" } },
+      { name: "08_mouth", options: { displayName: "Mouth Accessories" } },
+      { name: "09_eyewear", options: { displayName: "Eyewear" } },
+      { name: "10_border", options: { displayName: "Headwear/Shoulder Accessories" } },
+      { name: "11_numbers", options: { displayName: "Border" } },
+      { name: "12_suitsnames", options: { displayName: "Suit" } },
     ],
   },
   // {
