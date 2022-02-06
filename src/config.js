@@ -33,6 +33,11 @@ const extraMetadata = {
 };
 
 const outputJPEG = false; // if false, the generator outputs png's
+/**
+ * Set your tokenID index start number.
+ * ⚠️ Be sure it matches your smart contract!
+ */
+const startIndex = 0;
 
 // if you use an empty/transparent file, set the name here.
 const emptyLayerName = "blank";
@@ -175,25 +180,26 @@ const preview = {
 };
 
 module.exports = {
-  buildDir,
-  layersDir,
-  format,
-  baseUri,
-  description,
   background,
-  uniqueDnaTorrance,
-  layerConfigurations,
-  rarityDelimiter,
-  preview,
-  shuffleLayerConfigurations,
+  baseUri,
+  buildDir,
   debugLogs,
+  description,
+  emptyLayerName,
   extraAttributes,
   extraMetadata,
-  incompatible,
   forcedCombinations,
-  traitValueOverrides,
-  outputJPEG,
-  emptyLayerName,
-  useRootTraitType,
+  format,
   hashImages,
+  incompatible,
+  layerConfigurations,
+  layersDir,
+  outputJPEG,
+  preview,
+  rarityDelimiter,
+  shuffleLayerConfigurations,
+  startIndex,
+  traitValueOverrides,
+  uniqueDnaTorrance,
+  useRootTraitType,
 };
